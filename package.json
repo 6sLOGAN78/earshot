@@ -1,0 +1,22 @@
+{
+  "name": "earshot",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Send images through sound, live. SSTV encoder and real-time decoder in one browser tab.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "tsx test/roundtrip.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0"
+  }
+}
