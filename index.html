@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Earshot: send pictures through sound</title>
+    <meta name="description" content="Send an image out loud and watch another device draw it, line by line, from its microphone. SSTV encoder and live decoder in one browser tab." />
+    <meta name="theme-color" content="#efe4c8" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <script type="module" crossorigin src="./assets/index-CYCgJuch.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CGHMp9tg.css">
+  </head>
+  <body>
+    <header class="top">
+      <h1 class="brand">Earshot</h1>
+      <div class="field-inline" role="group" aria-labelledby="src-label">
+        <span id="src-label" class="lbl">Listen to</span>
+        <div class="seg">
+          <button type="button" data-src="mic" aria-pressed="true">Microphone</button>
+          <button type="button" data-src="loopback" aria-pressed="false">This tab</button>
+        </div>
+      </div>
+      <p class="station" aria-live="polite"><span class="dot" data-state="off"></span><span id="station-text">Not listening</span></p>
+      <a class="repo" href="https://github.com/6sLOGAN78/earshot" target="_blank" rel="noopener">Source</a>
+    </header>
+
+    <main class="desk">
+      <section class="pane" id="tx" aria-labelledby="tx-h">
+        <h2 id="tx-h">Transmit</h2>
+        <div class="boxes">
+          <label class="box"><span class="k">Mode</span><select id="mode"></select></label>
+          <div class="box"><span class="k">Frame</span><b id="tx-frame">320×240</b></div>
+          <div class="box"><span class="k">Length</span><b id="tx-length">36 s</b></div>
+          <label class="box"><span class="k">Output</span>
+            <select id="output"><option value="speaker">Speaker</option><option value="silent">Silent</option></select>
+          </label>
+        </div>
+        <div class="sheet-wrap" id="tx-drop">
+          <div class="sheet" id="tx-sheet">
+            <canvas id="tx-canvas" width="320" height="240" aria-label="Picture to send"></canvas>
+            <div class="veil" id="tx-veil" hidden></div>
+            <div class="rule" id="tx-rule" hidden></div>
+            <p class="drop-hint" id="drop-hint">Drop a picture here</p>
+          </div>
+        </div>
+        <div class="samples" role="group" aria-label="Sample pictures">
+          <span class="lbl">Samples</span>
+          <div id="samples" class="sample-row"></div>
+          <label class="btn ghost file">Choose picture<input type="file" id="pick" accept="image/*" /></label>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn primary" id="send">Send out loud</button>
+          <button type="button" class="btn ghost" id="wav">Save as WAV</button>
+          <output class="hz" id="tx-hz" aria-label="Tone being sent">---- Hz</output>
+        </div>
+      </section>
+
+      <section class="pane" id="rx" aria-labelledby="rx-h">
+        <h2 id="rx-h">Receive</h2>
+        <div class="boxes">
+          <div class="box"><span class="k">Heard</span><b id="rx-mode">—</b></div>
+          <div class="box"><span class="k">Line</span><b id="rx-line">—</b></div>
+          <div class="box"><span class="k">Signal</span><b id="rx-signal">—</b></div>
+          <div class="box"><span class="k">Started</span><b id="rx-started">—</b></div>
+        </div>
+        <div class="sheet-wrap">
+          <div class="sheet" id="rx-sheet">
+            <canvas id="rx-canvas" width="320" height="240" aria-label="Picture being received"></canvas>
+            <div class="rule" id="rx-rule" hidden></div>
+            <div class="empty" id="rx-empty">
+              <p class="empty-title" id="empty-title">Waiting for a picture</p>
+              <p class="empty-body" id="empty-body">Start listening, then play a transmission near this device. A picture starts drawing as soon as its header tone is heard.</p>
+              <button type="button" class="btn primary" id="listen">Start listening</button>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn ghost" id="save" disabled>Save picture</button>
+          <button type="button" class="btn ghost" id="stop" disabled>Stop</button>
+          <label class="btn ghost file">Decode a recording<input type="file" id="rec" accept="audio/*,.wav" /></label>
+          <button type="button" class="btn link" id="force" title="Start drawing now, without waiting for the header tone">Start without header</button>
+          <output class="hz" id="rx-hz" aria-label="Tone being heard">---- Hz</output>
+        </div>
+      </section>
+    </main>
+
+    <section class="band" aria-label="Waterfall of the tones being heard">
+      <div class="scale" aria-hidden="true">
+        <span style="--f: 2300">2300 white</span>
+        <span style="--f: 1900">1900 header</span>
+        <span style="--f: 1500">1500 black</span>
+        <span style="--f: 1200">1200 sync</span>
+      </div>
+      <div class="wf-cell"><canvas id="wf"></canvas></div>
+    </section>
+
+    <section class="log" aria-labelledby="log-h">
+      <h2 id="log-h">Received</h2>
+      <ol id="log" class="strips"></ol>
+      <p class="log-empty" id="log-empty">Every picture this tab hears is filed here, finished or not.</p>
+    </section>
+
+  </body>
+</html>
