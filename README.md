@@ -2,7 +2,7 @@
 
 **Send pictures through sound, live.** One device plays a picture out loud. Another device listening nearby draws it line by line from its microphone while the sound is still playing. The encoder and the real-time decoder run in the same browser tab, with no server and no recording step.
 
-**Live app:** https://6sLOGAN78.github.io/earshot/
+**Live app:** https://earshot.ayush-maurya-portfolio.workers.dev/
 
 ![Earshot sending and receiving a picture over sound](docs/screenshot.png)
 
